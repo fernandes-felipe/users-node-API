@@ -1,22 +1,29 @@
 'use strict'
 
+const User = require('../models/user')
+
 exports.post = (req, res, next) => {
-    res.status(201).send(req.body);
-};
+    const user = req.body
 
-exports.put = (req, res, next) => {
-    const id = req.params.id;
-    res.status(201).send({
-        id: id,
-        item: req.body
+    User.addUser(user, res,);
+}
 
-    });
+exports.get = (req, res, next) => {
+    const id = parseInt(req.params.id)
+
+    User.findUserById(id, res);
+}
+
+exports.patch = (req, res, next) => {
+    const id = parseInt(req.params.id)
+    const values = req.body
+
+    User.alterUserById(id, values, res)
+    
 };    
 
 exports.delete = (req, res, next) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id,
-        item: req.body
-    });
+    const id = parseInt(req.params.id);
+    
+    User.deleteUserById(id, res)
 };

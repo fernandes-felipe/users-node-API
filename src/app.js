@@ -8,7 +8,7 @@ const router = express.Router();
 
 //load routes
 const indexRoute = require('./routes/index');
-const userRoute = require('./routes/users-route');   
+const userRoute = require('./routes/users-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:false }));
