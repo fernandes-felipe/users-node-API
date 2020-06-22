@@ -1,29 +1,39 @@
 const connection = require('../../infra/connection')
 
 class User {
-    addUser(user, res) {
-        const sql = 'INSERT INTO users SET ?'
-
-        connection.query(sql, user, (error, result) => {
-            if(error) {
-                res.status(400).json(error)
-            } else {
-                res.status(201).json(result)
-            }
-        })
+  async addUser(user, res) {
+        const { results } = await connection.query({
+            sql: `
+                    INSERT INTO
+                        users
+                        (
+                            firstname, 
+                            lastname, 
+                            email
+                        )
+                    VALUES
+                        (
+                            :val1,
+                            :val2,
+                            :val3
+                        )
+                    ;
+                `,
+            params: {
+                val1: user.firstname,
+                val2: user.lastname,
+                val3: user.email,    
+            },
+        });
+       
+        res.json(results)
     }
 
-    findUserById(id, res) {
+    async findUserById(id, res) {
         const sql = `SELECT * FROM users WHERE id=${id}`
-        
-        connection.query(sql, (error, result) => {
-            const user = result[0]
-            if(error) {
-                res.status(400).json(error)
-            } else {
-                res.status(200).json(user)
-            }
-        })
+
+        const result = await connection.query({sql})
+        res.status(201).json(result.results)
 
     }
 
@@ -40,16 +50,11 @@ class User {
 
     }
 
-    deleteUserById(id, res){
-        const sql = 'DELETE FROM users WHERE id=?'
+   async deleteUserById(id, res){
+        const sql = `DELETE FROM users WHERE id=${id}`
+        const result = await connection.query({sql})
 
-        connection.query(sql, id, (error, result) => {
-            if(error) {
-                res.status(400).json(error)
-            } else {
-                res.status(200).json({id})
-            }
-        })
+        res.status(201).json(result)
     }
 }
 

@@ -1,11 +1,10 @@
-const mysql = require('mysql');
+const { MySQL } = require('mysql-promisify');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
+const connection = new MySQL({
+    host: '127.0.0.1',
     user: 'root',
     password: '',
-    database: 'users'
+    database: 'users',
 });
 
 module.exports = connection;
