@@ -14,7 +14,7 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "http": "0.0.0",
-    "knex": "^0.21.1",
+    "knex": "^2.4.0",
     "mysql-promisify": "^1.0.1"
   },
   "devDependencies": {
